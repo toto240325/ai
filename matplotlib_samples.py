@@ -4,6 +4,7 @@
 # Import pyplot module and alias it as plt. This can avoid repeatly call pyplot.
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import numpy as np
 
 
 # Draw a point based on the x, y axis value.
@@ -139,7 +140,7 @@ def draw_horizontal_line():
     
     # The x-axis maximum number.
     axis_x = 100
-    
+
     # The y-axis maximum number.
     axis_y = 10
     
@@ -156,6 +157,74 @@ def draw_horizontal_line():
     plt.show()  
 
 
+def draw_line():
+    # List to hold x values.
+    x_number_values = [1, 2, 3, 4, 5]
+    # List to hold y values.
+    y_number_values = [1, 4, 9, 16, 25]
+    # Plot the number in the list and set the line thickness.
+    plt.plot(x_number_values, y_number_values, linewidth=3)
+    # Set the line chart title and the text font size.
+    plt.title("Square Numbers", fontsize=19)
+    # Set x axis label.
+    plt.xlabel("Number Value", fontsize=10)
+    # Set y axis label.
+    plt.ylabel("Square of Number", fontsize=10)
+    # Set the x, y axis tick marks text size.
+    plt.tick_params(axis='both', labelsize=9)
+    # Display the plot in the matplotlib's viewer.
+    plt.show()
+
+
+# draw a line of given slope and intercept with y axis
+def draw_line_slope_intercept(slope=1,intercept=3):
+    # line equation : y = slope*x + intercept
+    x1 = 1
+    x2 = 5
+    x0 = 0
+    y0 = slope * x0 + intercept
+    y1 = slope * x1 + intercept
+    y2 = slope * x2 + intercept
+    
+    # List to hold x values.
+    x_number_values = [x0,x1,x2]
+    # List to hold y values.
+    y_number_values = [y0,y1,y2]
+    # Plot the number in the list and set the line thickness.
+    plt.plot(x_number_values, y_number_values, linewidth=3)
+    # Set the line chart title and the text font size.
+    plt.title(f"simple line with slope={slope} and intercept={intercept}", fontsize=19)
+    # Set x axis label.
+    plt.xlabel("X Values", fontsize=10)
+    # Set y axis label.
+    plt.ylabel("Y Values", fontsize=10)
+    # Set the x, y axis tick marks text size.
+    plt.tick_params(axis='both', labelsize=9)
+    
+    # plt.xlim(0, 10)
+
+    # Display the plot in the matplotlib's viewer.
+    plt.show()
+
+
+def dynamic_plot():
+    x = np.linspace(0, 6*np.pi, 100)
+    y = np.sin(x)
+
+    # You probably won't need this if you're embedding things in a tkinter plot...
+    # ion : interactive mode on
+    plt.ion()
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    line1, = ax.plot(x, y, 'r-') # Returns a tuple of line objects, thus the comma
+
+    for phase in np.linspace(0, 10*np.pi, 500):
+        line1.set_ydata(np.sin(x + phase))
+        fig.canvas.draw()
+        fig.canvas.flush_events()
+
+
 if __name__ == '__main__':
     # draw_point()
     # draw_multiple_points()
@@ -164,7 +233,10 @@ if __name__ == '__main__':
     # draw_vertical_line()
     # draw_vertical_columnbar_line()
     # draw_vertical_columnbar_line_with_stem_method()
-    draw_horizontal_line()
+    # draw_horizontal_line()
+    # draw_line()
+    # draw_line_slope_intercept()
+    dynamic_plot()
 
     
     

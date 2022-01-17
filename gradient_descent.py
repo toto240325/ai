@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
 from random import random
@@ -28,35 +29,29 @@ def MSEStep(X, y, W, b, learn_rate = 0.005):
     
     # Fill in code
 
-    error_tot = 0
+    W_new = W
+    b_new = b
     m = len(X)
+    # for each of the points
     for i in range(m):
+
         # calculate error for this point
         # first calcule y1
         a = X.shape
         Xi = X[i]
         yi = y[i]
         #yh : y hat, like in the Udacity video on linear regressions
-        yhi = b
+        yhi = b_new
         for j in range(len(Xi)):
-            yhi += W[j] * Xi[j]
-        error_i = (yhi - yi)**2
-        error_tot += error_i
-    error_tot = error_tot / (2*m)
-
-
-    W_new = [0.35]
-    for i in range(len(W)):
-        delta = randint(0,5)
-        delta *= 1 if (randint(0,1) == 0) else -1
-        W_new[i] = W[i] * (100 + delta)/100
+            yhi += W_new[j] * Xi[j]
         
-    b_new = b
+        delta_error_W =  (yi - yhi) * Xi * learn_rate
+        delta_error_b =  (yi - yhi) * learn_rate
 
-    
-    print(f'W : {W}')
-    print(f'W_new : {W_new}')
-    
+        W_new = W_new + delta_error_W
+        b_new = b_new + delta_error_b
+        
+    print(f'W : {W}  W_new : {W_new}   b : {b}  b_new : {b_new}')
 
     return W_new, b_new
 
@@ -96,33 +91,66 @@ def miniBatchGD(X, y, batch_size = 20, learn_rate = 0.005, num_iter = 25):
     return regression_coef
 
 
+def draw(data,slope=1,intercept=3):
+    Xdata = data[:,0]
+    Ydata = data[:,1]
+
+    # line equation : y = slope*x + intercept
+    x1 = 1
+    x2 = 5
+    x0 = 0
+    y0 = slope * x0 + intercept
+    y1 = slope * x1 + intercept
+    y2 = slope * x2 + intercept
+    
+    # # List to hold x values.
+    # x_number_values = Xdata
+    # # List to hold y values.
+    # y_number_values = Ydata
+    # # Plot the number in the list and set the line thickness.
+    # plt.plot(x_number_values, y_number_values, linewidth=3)
+
+
+    # Set the line chart title and the text font size.
+    plt.title(f"simple line with slope={slope} and intercept={intercept}", fontsize=19)
+    # Set x axis label.
+    plt.xlabel("X Values", fontsize=10)
+    # Set y axis label.
+    plt.ylabel("Y Values", fontsize=10)
+    # Set the x, y axis tick marks text size.
+    plt.tick_params(axis='both', labelsize=9)
+    
+    # plt.xlim(0, 10)
+
+    plt.scatter(Xdata,Ydata, zorder = 3)
+    plt.show()    
+
+
 if __name__ == "__main__":
     # perform gradient descent
-    print("test")
+    print("")
     data = np.loadtxt('data.csv', delimiter = ',')
+
+    X = data[:,:-1]
+    y = data[:,-1]
+    regression_coef = miniBatchGD(X, y)
+
     
-    if True:
-      X = data[:,:-1]
-      y = data[:,-1]
-      regression_coef = miniBatchGD(X, y)
-      print("end")
+    
+    # plot the results
+    import matplotlib.pyplot as plt
+    
+    plt.figure()
+    X_min = X.min()
+    X_max = X.max()
+    counter = len(regression_coef)
+    for W, b in regression_coef:
+        counter -= 1
+        color = [1 - 0.92 ** counter for _ in range(3)]
+        plt.plot([X_min, X_max],[X_min * W + b, X_max * W + b], color = color)
+    plt.scatter(X, y, zorder = 3)
+    plt.show()
 
-    if False:
-      
-      
-      # plot the results
-      import matplotlib.pyplot as plt
-      
-      plt.figure()
-      X_min = X.min()
-      X_max = X.max()
-      counter = len(regression_coef)
-      for W, b in regression_coef:
-          counter -= 1
-          color = [1 - 0.92 ** counter for _ in range(3)]
-          plt.plot([X_min, X_max],[X_min * W + b, X_max * W + b], color = color)
-      plt.scatter(X, y, zorder = 3)
-      plt.show()
-
+    # draw(data)
 
     
