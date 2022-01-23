@@ -177,7 +177,7 @@ def draw_line():
 
 
 # draw a line of given slope and intercept with y axis
-def draw_line_slope_intercept(slope=1,intercept=3):
+def draw_things(slope=1,intercept=3):
     # line equation : y = slope*x + intercept
     x1 = 1
     x2 = 5
@@ -192,6 +192,52 @@ def draw_line_slope_intercept(slope=1,intercept=3):
     y_number_values = [y0,y1,y2]
     # Plot the number in the list and set the line thickness.
     plt.plot(x_number_values, y_number_values, linewidth=3)
+   
+    # plotting a line
+    xpoints = np.array([0, 6])
+    ypoints = np.array([0, 5])
+    plt.plot(xpoints, ypoints)
+
+    # plotting points
+    xpoints = np.array([1, 8])
+    ypoints = np.array([3, 10])
+    plt.plot(xpoints, ypoints, 'o')
+
+    # # plotting based on y values only (x will range from 0, 1, 2, 3, ...)
+    # ypoints = np.array([3, 8, 1, 10, 5, 7])
+    # plt.plot(ypoints)
+
+    # # plot points with a specific marker
+    # # a lot of different markers : https://www.w3schools.com/python/matplotlib_markers.asp
+    # ypoints = np.array([13, 1.8, 12, 9])
+    # plt.plot(ypoints, marker = '*')
+
+   
+
+    ypoints = np.array([13, 1.8, 12, 9])
+
+    # # a market|line|column indication
+    # # possible line values : '-', '--', ':', '-.'
+    # # colours : r: red, g: green, b: blue, c: cyan, m: magenta, y: yellow, k: black, w: white
+    # plt.plot(ypoints, 'o:r')
+
+    # # market size : 
+    # plt.plot(ypoints, marker = 'o', ms = 20)
+
+    # # market edge colour : 
+    # plt.plot(ypoints,'o:b', ms = 20, mec = 'r')
+    
+    # linestyle : 
+    plt.plot(ypoints, linestyle = 'dotted')
+    
+    # linewidth : 
+
+    ypoints2 = ypoints + 1
+    plt.plot(ypoints2, linewidth = 10)
+    
+
+
+
     # Set the line chart title and the text font size.
     plt.title(f"simple line with slope={slope} and intercept={intercept}", fontsize=19)
     # Set x axis label.
@@ -235,7 +281,7 @@ if __name__ == '__main__':
     # draw_vertical_columnbar_line_with_stem_method()
     # draw_horizontal_line()
     # draw_line()
-    # draw_line_slope_intercept()
+    # draw_things()
     dynamic_plot()
 
     

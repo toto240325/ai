@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from random import randint
 from random import random
-
+from sklearn.linear_model import LinearRegression
+    
 
 # Setting a random seed, feel free to change it and see different solutions.
 np.random.seed(42)
@@ -60,7 +61,7 @@ def MSEStep(X, y, W, b, learn_rate = 0.005):
 # button. The gradient descent step will be performed multiple times on
 # the provided dataset, and the returned list of regression coefficients
 # will be plotted.
-def miniBatchGD(X, y, batch_size = 20, learn_rate = 0.005, num_iter = 25):
+def miniBatchGD(X, y, batch_size = 20, learn_rate = 0.005, num_iter = 100):
     """
     This function performs mini-batch gradient descent on a given dataset.
 
@@ -126,6 +127,11 @@ def draw(data,slope=1,intercept=3):
     plt.show()    
 
 
+def myfit(x_values, y_values,x):
+    model = LinearRegression()
+    model.fit(x_values, y_values)
+    return model.predict(x)
+
 if __name__ == "__main__":
     # perform gradient descent
     print("")
@@ -149,6 +155,13 @@ if __name__ == "__main__":
         color = [1 - 0.92 ** counter for _ in range(3)]
         plt.plot([X_min, X_max],[X_min * W + b, X_max * W + b], color = color)
     plt.scatter(X, y, zorder = 3)
+
+    values_list = [-3,-2.5,-2.2,-1.75,-1,-0.5,1, 1.5, 2, 3]
+    values = [ [x] for x in values_list ]
+    predictions = myfit(X,y, values)
+    #predict = predictions[0]
+    print(f'predict : {predictions}')
+    plt.scatter(values, predictions, zorder=5)
     plt.show()
 
     # draw(data)
