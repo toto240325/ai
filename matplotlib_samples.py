@@ -261,6 +261,7 @@ def dynamic_plot():
     # ion : interactive mode on
     plt.ion()
 
+
     fig = plt.figure()
     ax = fig.add_subplot(111)
     line1, = ax.plot(x, y, 'r-') # Returns a tuple of line objects, thus the comma
